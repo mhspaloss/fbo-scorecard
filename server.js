@@ -4,8 +4,23 @@
 // init project
 const express = require('express');
 const exphbs  = require('express-handlebars');
+const mongoose = require('mongoose');
 
 const app = express();
+
+//Map global promise - get rid of worning (this came from a tutorial, I didn't actually get a warning)
+mongoose.Promise = global.Promise;
+
+//Connect to mongoose
+mongoose.connect(process.env.MONGO_DEV, {
+  useNewUrlParser: true
+})
+.then(() => console.log('MongoDB connected'))
+.catch(err => console.log(err));
+
+//Load Idea Model
+require('./models/Opportunity');
+const Idea = mongoose.model('ideas');
 
 //handlebars middleware
 app.engine('handlebars', exphbs(
