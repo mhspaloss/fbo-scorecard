@@ -22,6 +22,11 @@ mongoose.connect(process.env.MONGO_DEV, {
 require('./models/Opportunity');
 const Idea = mongoose.model('ideas');
 
+//Load FBO Models
+const Presol = mongoose.model('presol');
+const Srcsgt = mongoose.model('srcsgt');
+const Combine = mongoose.model('combine');
+
 //handlebars middleware
 app.engine('handlebars', exphbs(
   {defaultLayout: 'main'
