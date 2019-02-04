@@ -4,6 +4,7 @@
 // init project
 const express = require('express');
 const exphbs  = require('express-handlebars');
+const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 
 const app = express();
@@ -27,11 +28,15 @@ const Presol = mongoose.model('presol');
 const Srcsgt = mongoose.model('srcsgt');
 const Combine = mongoose.model('combine');
 
-//handlebars middleware
+//Handlebars Middleware
 app.engine('handlebars', exphbs(
   {defaultLayout: 'main'
   }));
 app.set('view engine', 'handlebars');
+
+// Body parser middleware
+app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.json())
 
 
 // we've started you off with Express, 
@@ -51,6 +56,33 @@ app.get('/', function(req, res) {
 //About Route
 app.get('/about', function (req, res) {
   res.render('about');
+});
+
+//Add Idea Route
+app.get('/ideas/add', function (req, res) {
+  res.render('ideas/add');
+});
+
+//Process Form
+app.post('/ideas', function (req, res) {
+  let errors = [];
+  
+  if(!req.body.title) {
+  errors.push({text: 'Please add a title'});
+  }
+  if(!req.body.details) {
+  errors.push({text: 'Please add some details'});
+  }
+  
+  if(errors.length > 0){
+    res.render('ideas/add', {
+      errors: errors,
+      title: req.body.title,
+      details: req.body.details
+    });
+  } else {
+    res.send('passed');
+  }
 });
 
 //User Route
