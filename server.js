@@ -9,6 +9,10 @@ const mongoose = require('mongoose');
 
 const app = express();
 
+//TRead JSON from GitHub repo
+var request = require('request');
+
+
 //Map global promise - get rid of worning (this came from a tutorial, I didn't actually get a warning)
 mongoose.Promise = global.Promise;
 
@@ -41,6 +45,20 @@ app.use(bodyParser.json())
 
 // we've started you off with Express, 
 // but feel free to use whatever libs or frameworks you'd like through `package.json`.
+
+//Test code to see if I can load in an FBO file and create JSON
+
+//Read JSON file and create dailyOpps object.
+    var dateString = 'https://raw.githubusercontent.com/mhspaloss/fbo-parse/master/Output%20Files/Matt_PRESOL.json';
+    console.log(dateString);
+
+    var dailyOpps = [];
+request(dateString, function (error, response, body) {
+  if (!error && response.statusCode == 200) {
+     var dailyOpps = JSON.parse(body);
+     console.log('Number of JSON records in the input file: ', dailyOpps.length);
+  }
+});
 
 // http://expressjs.com/en/starter/static-files.html
 app.use(express.static('public'));
@@ -81,7 +99,15 @@ app.post('/ideas', function (req, res) {
       details: req.body.details
     });
   } else {
-    res.send('passed');
+    const newUser = {
+    title: req.body.title,
+    details: req.body.details
+    }
+    new Idea(newUser)
+    .save()
+    .then(idea => {
+      res.redirect('ideas');
+    })
   }
 });
 
