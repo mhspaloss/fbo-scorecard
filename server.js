@@ -56,7 +56,14 @@ app.use(bodyParser.json())
 request(dateString, function (error, response, body) {
   if (!error && response.statusCode == 200) {
      var dailyOpps = JSON.parse(body);
+     var writeRecord = dailyOpps[0];
      console.log('Number of JSON records in the input file: ', dailyOpps.length);
+     console.log('writeRecord[0]["PRESOL"]: ', writeRecord[0]["PRESOL"]);
+
+    //Write dailyOpps to mongoDB
+  new Presol(writeRecord[0]["PRESOL"])
+  .save()
+ 
   }
 });
 

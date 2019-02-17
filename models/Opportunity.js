@@ -18,9 +18,8 @@ const IdeaSchema = new Schema({
 });
 
 //Create FBO-Opportunity Schema
-const FBOPresolSchema = new Schema({
-  PRESOL:
-  [{DATE: String,
+const FBOPresolSchema = new Schema(
+  {DATE: String,
 		YEAR: String,
 		AGENCY: String,
 		OFFICE: String,
@@ -40,14 +39,12 @@ const FBOPresolSchema = new Schema({
     SETASIDE: String,
     POPCOUNTRY: String,
     POPZIP: String,
-    POPADDRESS: String,}]
-  
-});
+    POPADDRESS: String,}
+);
 
 //Create FBO-Opportunity Schema
-const FBOSrcsgtSchema = new Schema({
-  SRCSGT:
-  [{DATE: String,
+const FBOSrcsgtSchema = new Schema(
+  {DATE: String,
     YEAR: String,
     AGENCY: String,
     OFFICE: String,
@@ -67,14 +64,13 @@ const FBOSrcsgtSchema = new Schema({
     SETASIDE: String,
     POPCOUNTRY: String,
     POPZIP: String,
-    POPADDRESS: String,}]
+    POPADDRESS: String,}
   
-});
+);
 
 //Create FBO-Opportunity Schema
-const FBOCombineSchema = new Schema({
-  COMBINE:
-  [{DATE: String,
+const FBOCombineSchema = new Schema(
+  {DATE: String,
     YEAR: String,
     AGENCY: String,
     OFFICE: String,
@@ -94,9 +90,9 @@ const FBOCombineSchema = new Schema({
     SETASIDE: String,
     POPCOUNTRY: String,
     POPZIP: String,
-    POPADDRESS: String,}]
+    POPADDRESS: String,}
   
-});
+);
 
 mongoose.model('ideas', IdeaSchema);
 mongoose.model('presol', FBOPresolSchema);
