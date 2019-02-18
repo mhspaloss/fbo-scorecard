@@ -13,7 +13,7 @@ const app = express();
 const request = require('request');
 
 
-//Map global promise - get rid of worning (this came from a tutorial, I didn't actually get a warning)
+//Map global promise - get rid of warning (this came from a tutorial, I didn't actually get a warning)
 mongoose.Promise = global.Promise;
 
 //Connect to mongoose
@@ -114,7 +114,10 @@ app.get('/report', function (req, res) {
 
 //Validate Route
 app.get('/validate', function (req, res) {
-  res.render('validate');
+  const title = 'Validate Opportunity';
+  res.render('validate', {
+    title: title
+  });
 });
 
 //Workflow Route
