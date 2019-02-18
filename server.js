@@ -10,7 +10,7 @@ const mongoose = require('mongoose');
 const app = express();
 
 //TRead JSON from GitHub repo
-var request = require('request');
+const request = require('request');
 
 
 //Map global promise - get rid of worning (this came from a tutorial, I didn't actually get a warning)
