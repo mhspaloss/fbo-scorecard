@@ -24,7 +24,7 @@ mongoose.connect(process.env.MONGO_DEV, {
 .then(() => console.log('MongoDB connected'))
 .catch(err => console.log(err));
 
-//Load Idea Model
+//Load Idea and FBO Models
 require('./models/Opportunity');
 const Idea = mongoose.model('ideas');
 
@@ -64,6 +64,77 @@ app.get('/', function(req, res) {
 //About Route
 app.get('/about', function (req, res) {
   res.render('about');
+});
+
+//Opp Index Page
+app.get('/opps', function (req, res) {
+  Presol.find({
+    "DATE": "1120",
+    "YEAR": "17"
+})
+    .then(opps => {
+      res.render('opps', {
+        opps:opps
+    });
+  });
+});
+
+//Edit Opp Route
+app.get('/opps/edit/:id', function (req, res) {
+  Presol.findOne({
+    _id: req.params.id
+  })
+  .then(opps => {
+    res.render('opps/edit',{
+      opps:opps
+    });
+  }); 
+});
+
+//Process Opp Form
+app.post('/opps', function (req, res) {
+  let errors = [];
+  
+  if(!req.body.title) {
+  errors.push({text: 'Please add a title'});
+  }
+  if(!req.body.details) {
+  errors.push({text: 'Please add some details'});
+  }
+  
+  if(errors.length > 0){
+    res.render('ideas/add', {
+      errors: errors,
+      title: req.body.title,
+      details: req.body.details
+    });
+  } else {
+    const newUser = {
+    title: req.body.title,
+    details: req.body.details
+    }
+    new Idea(newUser)
+    .save()
+    .then(idea => {
+      res.redirect('opps');
+    })
+  }
+});
+
+//Edit Opp Form Process
+app.put('/opps/:id', function (req, res) {
+  Idea.findOne({
+    _id: req.params.id
+  })
+  .then(idea => {
+  //New values
+    idea.title = req.body.title;
+    idea.details = req.body.details;
+    idea.save()
+      .then(idea => {
+        res.redirect('/opps');
+    })
+  });
 });
 
 //Idea Index Page

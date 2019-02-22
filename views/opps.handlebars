@@ -1,0 +1,18 @@
+{{#each opps}}
+  <div class="card card-body mb-2">
+    <h4>
+      Title:  {{{SUBJECT}}}
+    </h4>
+    <p>
+      Description
+    </p>
+    <p>
+      {{{DESC}}}
+    </p>
+    <a class="btn btn-dark btn-block" href="/opps/edit/{{id}}">Edit</a>
+</div>
+{{else}}
+  <p>
+    No Ideas Listed
+  </p>
+{{/each}}

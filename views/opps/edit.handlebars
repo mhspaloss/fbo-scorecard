@@ -1,0 +1,52 @@
+<div class="card">
+  <div class="card-header">
+    Edit FBO Opportunity
+  </div>
+  <div class="card-body">
+  <form action="/opps/{{opps.id}}?_method=PUT" method="post">
+    <input type="hidden" name="_method" value="PUT">
+    <h5 class="card-title">{{{opps.SUBJECT}}}</h5>
+    <p class="card-text">{{{opps.DESC}}}</p>
+    <div class="input-group">
+      <div class="custom-control custom-radio">
+        <input type="radio" class="custom-control-input" id="Interesting" name="defaultExampleRadios">
+        <label class="custom-control-label" for="Interesting">Interesting</label>
+      </div>
+      <div class="custom-control custom-radio">
+        <input type="radio" class="custom-control-input" id="notInteresting" name="defaultExampleRadios">
+        <label class="custom-control-label" for="notInteresting">Default unchecked</label>
+      </div>
+     <div class="custom-control custom-radio">
+        <input type="radio" class="custom-control-input" id="Ignored" name="defaultExampleRadios">
+        <label class="custom-control-label" for="Ignored">Default checked</label>
+      </div>     
+    </div>
+        <button type="submit" class="btn btn-primary">
+      Submit
+    </button>
+  </form>
+  </div>
+</div>
+
+<div class="row"> 
+  <h3 class="text-center">Edit FBO Opportunity</h3>
+  <div class="btn-group text-center" role="group" aria-label="Basic example">
+    <button type="button" class="btn btn-primary">Left</button>
+    <button type="button" class="btn btn-primary">Middle</button>
+    <button type="button" class="btn btn-primary">Right</button>
+  </div>
+</div>
+  <div class="card card-body">
+  <form action="/opps/{{opps.id}}?_method=PUT" method="post">
+    <input type="hidden" name="_method" value="PUT">
+    <div>
+      Title:  {{{opps.SUBJECT}}}
+    </div>
+    <div>
+      {{{opps.DESC}}}
+    </div>
+    <button type="submit" class="btn btn-primary">
+      Submit
+    </button>
+  </form>
+</div>
