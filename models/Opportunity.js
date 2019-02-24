@@ -39,7 +39,8 @@ const FBOPresolSchema = new Schema(
     SETASIDE: String,
     POPCOUNTRY: String,
     POPZIP: String,
-    POPADDRESS: String,}
+    POPADDRESS: String,
+    isInteresting: String,}
 );
 
 //Create FBO-Opportunity Schema
@@ -64,7 +65,8 @@ const FBOSrcsgtSchema = new Schema(
     SETASIDE: String,
     POPCOUNTRY: String,
     POPZIP: String,
-    POPADDRESS: String,}
+    POPADDRESS: String,
+    isInteresting: String,}
   
 );
 
@@ -90,7 +92,8 @@ const FBOCombineSchema = new Schema(
     SETASIDE: String,
     POPCOUNTRY: String,
     POPZIP: String,
-    POPADDRESS: String,}
+    POPADDRESS: String,
+    isInteresting: String,}
   
 );
 
