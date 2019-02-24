@@ -66,18 +66,32 @@ app.get('/about', function (req, res) {
   res.render('about');
 });
 
+/*Set initial date to today
+var date = new Date();
+var offset = 0; */
+
 //Opp Index Page
 app.get('/opps', function (req, res) {
+  //Find all, sort descending by year and date (monthday)
   Presol.find({
-    "DATE": "1120",
-    "YEAR": "17"
-})
-    .then(opps => {
-      res.render('opps', {
-        opps:opps
+    "isInteresting": {
+        "$exists": false
+    }
+  })
+  .sort({YEAR:'desc', DATE: 'desc'})
+  .then(opps => {
+    Presol.find({
+    "DATE": opps[0].DATE,
+    "YEAR": opps[0].YEAR
+  })
+  .then(opps => {
+    res.render('opps', {
+      opps:opps
+      });
     });
   });
 });
+
 
 //Edit Opp Route
 app.get('/opps/edit/:id', function (req, res) {
