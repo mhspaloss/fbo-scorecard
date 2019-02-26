@@ -66,10 +66,6 @@ app.get('/about', function (req, res) {
   res.render('about');
 });
 
-/*Set initial date to today
-var date = new Date();
-var offset = 0; */
-
 //Opp Index Page
 app.get('/opps', function (req, res) {
   //Find all, sort descending by year and date (monthday)
@@ -91,7 +87,6 @@ app.get('/opps', function (req, res) {
     });
   });
 });
-
 
 //Edit Opp Route
 app.get('/opps/edit/:id', function (req, res) {
