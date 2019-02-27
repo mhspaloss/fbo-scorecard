@@ -6,7 +6,7 @@
     <h5 class="card-title">{{{opps.SUBJECT}}}</h5>
     <p class="card-text">{{{opps.DESC}}}</p>
     <a href="{{{opps.URL}}}" target="_blank">Go to FedBizOpps.gov</a> 
-  <form action="/opps/{{opps.id}}?_method=PUT" method="post">
+  <form action="/sopps/{{opps.id}}?_method=PUT" method="post">
     <input type="hidden" name="_method" value="PUT">
     <div>
       <input type="radio" name="isInteresting" value="true" checked> Interesting<br>

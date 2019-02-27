@@ -66,8 +66,8 @@ app.get('/about', function (req, res) {
   res.render('about');
 });
 
-//Opp Index Page
-app.get('/opps', function (req, res) {
+//Presol Opp Index Page
+app.get('/popps', function (req, res) {
   //Find all, sort descending by year and date (monthday)
   Presol.find({
     "isInteresting": {
@@ -81,27 +81,27 @@ app.get('/opps', function (req, res) {
     "YEAR": opps[0].YEAR
   })
   .then(opps => {
-    res.render('opps', {
+    res.render('popps', {
       opps:opps
       });
     });
   });
 });
 
-//Edit Opp Route
-app.get('/opps/edit/:id', function (req, res) {
+//Presol Edit Opp Route
+app.get('/popps/edit/:id', function (req, res) {
   Presol.findOne({
     _id: req.params.id
   })
   .then(opps => {
-    res.render('opps/edit',{
+    res.render('popps/edit',{
       opps:opps
     });
   }); 
 });
 
-//Edit Opp Form Process
-app.put('/opps/:id', function (req, res) {
+//Presol Edit Opp Form Process
+app.put('/popps/:id', function (req, res) {
   Presol.findOne({
     _id: req.params.id
   })
@@ -110,7 +110,56 @@ app.put('/opps/:id', function (req, res) {
     presol.isInteresting = req.body.isInteresting;
     presol.save()
       .then(opps => {
-        res.redirect('/opps');
+        res.redirect('/popps');
+    })
+  });
+});
+
+//SRCSGT Opp Index Page
+app.get('/sopps', function (req, res) {
+  //Find all, sort descending by year and date (monthday)
+  Srcsgt.find({
+    "isInteresting": {
+        "$exists": false
+    }
+  })
+  .sort({YEAR:'desc', DATE: 'desc'})
+  .then(opps => {
+    Srcsgt.find({
+    "DATE": opps[0].DATE,
+    "YEAR": opps[0].YEAR
+  })
+  .then(opps => {
+    res.render('sopps', {
+      opps:opps
+      });
+    });
+  });
+});
+
+//SRCSGT Edit Opp Route
+app.get('/sopps/edit/:id', function (req, res) {
+  Srcsgt.findOne({
+    _id: req.params.id
+  })
+  .then(opps => {
+    res.render('sopps/edit',{
+      opps:opps
+    });
+  }); 
+});
+
+//SRCSGT Edit Opp Form Process
+app.put('/sopps/:id', function (req, res) {
+  Srcsgt.findOne({
+    _id: req.params.id
+  })
+  .then(srcsgt => {
+  //New values
+    srcsgt.isInteresting = req.body.isInteresting;
+    srcsgt.save()
+      .then(opps => {
+        res.redirect('/sopps');
     })
   });
 });
