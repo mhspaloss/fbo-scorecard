@@ -13,6 +13,12 @@ const app = express();
 //TRead JSON from GitHub repo
 const request = require('request');
 
+//test export and import
+var tools = require('./public/javascripts/fbo.js');
+console.log(typeof tools.foo); // => 'function'
+console.log(typeof tools.bar); // => 'function'
+tools.foo();
+tools.bar();
 
 //Map global promise - get rid of warning (this came from a tutorial, I didn't actually get a warning)
 mongoose.Promise = global.Promise;
