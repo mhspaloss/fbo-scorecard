@@ -1,19 +1,12 @@
-<div class="jumbotron text-center">
-  <h1 class="display-3">{{title}}</h1>
-  <p class="lead">
-    Is this opportunity worth pursuing?
+<h1>
+  Validate
+</h1>
+{{#each fbofilenames}}
+  <div class="card card-body mb-2">
+    <a href="{{fboFile}}" target="_blank">{{fboFile}}</a>
+  </div>
+{{else}}
+  <p>
+    No Files Listed, Ingest is up to date
   </p>
-</div>
-<div class="jumbotron text-center">
-  <div class="container">
-  <h1>Title Text</h1>
-</div>
-<div class="container">
-  <h2>Description Text</h2>
-</div>
-  <a href="#" class="btn btn-dark btn-lg">Previous</a>
-  <a href="#" class="btn btn-dark btn-lg">Next</a>
-  <a href="#" class="btn btn-dark btn-lg">Good</a>
-  <a href="#" class="btn btn-dark btn-lg">Bad</a>
-  <a href="#" class="btn btn-dark btn-lg">Save</a>
-</div>
+{{/each}}

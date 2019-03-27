@@ -15,7 +15,10 @@
     "mongoose": "^5.4.9",
     "body-parser": "^1.18.3",
     "request": "^2.88.0",
-    "method-override": "^3.0.0"
+    "method-override": "^3.0.0",
+    "ftp": "^0.3.10",
+    "ftp-client": "^0.2.2",
+    "googleapis": "^38.0.0"
   },
   "engines": {
     "node": "8.x"
