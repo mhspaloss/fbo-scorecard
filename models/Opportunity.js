@@ -17,6 +17,18 @@ const IdeaSchema = new Schema({
   }
 });
 
+// Create FBO filename schema
+const FBOFileSchema = new Schema({
+  fboFile:{
+    type: String,
+    required: true
+  },
+  gitFile:{
+    type: String, 
+    required: true
+  }
+});
+
 //Create FBO-Opportunity Schema
 const FBOPresolSchema = new Schema(
   {DATE: String,
@@ -101,3 +113,4 @@ mongoose.model('ideas', IdeaSchema);
 mongoose.model('presol', FBOPresolSchema);
 mongoose.model('srcsgt', FBOSrcsgtSchema);
 mongoose.model('combine', FBOCombineSchema);
+mongoose.model('fbofilename', FBOFileSchema);

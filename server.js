@@ -13,12 +13,8 @@ const app = express();
 //TRead JSON from GitHub repo
 const request = require('request');
 
-//test export and import
-var tools = require('./public/javascripts/fbo.js');
-console.log(typeof tools.foo); // => 'function'
-console.log(typeof tools.bar); // => 'function'
-tools.foo();
-tools.bar();
+//Include FBO project-specific functions
+var fbo = require('./public/javascript/fbo.js');
 
 //Map global promise - get rid of warning (this came from a tutorial, I didn't actually get a warning)
 mongoose.Promise = global.Promise;
@@ -30,6 +26,8 @@ mongoose.connect(process.env.MONGO_DEV, {
 .then(() => console.log('MongoDB connected'))
 .catch(err => console.log(err));
 
+//Connect to FTP Server
+
 //Load Idea and FBO Models
 require('./models/Opportunity');
 const Idea = mongoose.model('ideas');
@@ -38,6 +36,7 @@ const Idea = mongoose.model('ideas');
 const Presol = mongoose.model('presol');
 const Srcsgt = mongoose.model('srcsgt');
 const Combine = mongoose.model('combine');
+const FBOFilename = mongoose.model('fbofilename');
 
 //Handlebars Middleware
 app.engine('handlebars', exphbs(
@@ -52,6 +51,13 @@ app.use(bodyParser.json());
 // Method override middleware
 app.use(methodOverride('_method'));
 
+//Calculate and save FBO filenames to be processed
+const pathArray = fbo.filePaths();
+pathArray.forEach(function(element) {
+  console.log('element ', element);
+  new FBOFilename(element)
+  .save()
+});
 
 // we've started you off with Express, 
 // but feel free to use whatever libs or frameworks you'd like through `package.json`.
@@ -261,9 +267,11 @@ app.get('/report', function (req, res) {
 
 //Validate Route
 app.get('/validate', function (req, res) {
-  const title = 'Validate Opportunity';
-  res.render('validate', {
-    title: title
+  FBOFilename.find({})
+    .then(fbofilenames => {
+      res.render('validate', {
+        fbofilenames:fbofilenames
+    });
   });
 });
 
