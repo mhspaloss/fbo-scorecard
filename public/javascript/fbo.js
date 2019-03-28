@@ -6,10 +6,11 @@ module.exports = {
     console.log('function bar');
   },
   filePaths: function () {
-        var date = new Date(); //capture yesterday's date as an endpoint
-        date.setDate(date.getDate() - 1);
+    //capture yesterday's date as an endpoint
+    var date = new Date(); 
+    date.setDate(date.getDate() - 1);
     
-    var curdate = parseDate(process.env.FBO_DATE); //replace this with a read of an environment variable to get the string
+    var curdate = parseDate(process.env.FBO_DATE); 
     console.log('curdate ', curdate);
     var pathArray = [];
     // While processing files from last processed to today (assumes I have every day in the date range), build filename array
@@ -32,7 +33,7 @@ module.exports = {
     };
 
         //Save current date to environment variable as ISO Standard date string
-        process.env.FBO_DATE = curYear + '-' + curMonth + '-' + curDay;
+        //process.env.FBO_DATE = curYear + '-' + curMonth + '-' + curDay;
 
     return pathArray;
   }
