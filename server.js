@@ -52,9 +52,14 @@ app.use(bodyParser.json());
 app.use(methodOverride('_method'));
 
 //Calculate and save FBO filenames to be processed
-const pathArray = fbo.filePaths();
-pathArray.forEach(function(element) {
-  console.log('element ', element);
+const pathArray = fbo.filePaths(); //calc array of path names
+
+FBOFilename.collection.drop(function(err, delOK) {  //delete old path names from MongoDb
+  if (err) throw err;
+  if (delOK) console.log("Collection deleted");
+});
+
+pathArray.forEach(function(element) { //build and save new path names to MongoDB
   new FBOFilename(element)
   .save()
 });
@@ -268,6 +273,7 @@ app.get('/report', function (req, res) {
 //Validate Route
 app.get('/validate', function (req, res) {
   FBOFilename.find({})
+    .sort({fboFile:'desc'})
     .then(fbofilenames => {
       res.render('validate', {
         fbofilenames:fbofilenames
