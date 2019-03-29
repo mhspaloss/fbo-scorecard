@@ -8,9 +8,13 @@ const methodOverride = require('method-override');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 
+//Include 18F required code
+const fs = require("fs");
+const parser = require("./index");
+
 const app = express();
 
-//TRead JSON from GitHub repo
+//Read JSON from GitHub repo
 const request = require('request');
 
 //Include FBO project-specific functions
@@ -37,6 +41,8 @@ const Presol = mongoose.model('presol');
 const Srcsgt = mongoose.model('srcsgt');
 const Combine = mongoose.model('combine');
 const FBOFilename = mongoose.model('fbofilename');
+const Presoleval = mongoose.model('presoleval');
+
 
 //Handlebars Middleware
 app.engine('handlebars', exphbs(
