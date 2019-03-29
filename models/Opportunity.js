@@ -56,6 +56,32 @@ const FBOPresolSchema = new Schema(
 );
 
 //Create FBO-Opportunity Schema
+const FBOPresolEvalSchema = new Schema(
+  {DATE: String,
+		YEAR: String,
+		AGENCY: String,
+		OFFICE: String,
+		LOCATION: String,
+		ZIP: String,
+		CLASSCOD: String,
+    NAICS: String,
+    OFFADD: String,
+    SUBJECT: String,
+    SOLNBR: String,
+    RESPDATE: String,
+    CONTACT: String,
+    DESC: String,
+    LINK: String,
+    URL: String,
+    DESC2: String,
+    SETASIDE: String,
+    POPCOUNTRY: String,
+    POPZIP: String,
+    POPADDRESS: String,
+    isInteresting: String,}
+);
+
+//Create FBO-Opportunity Schema
 const FBOSrcsgtSchema = new Schema(
   {DATE: String,
     YEAR: String,
@@ -114,3 +140,4 @@ mongoose.model('presol', FBOPresolSchema);
 mongoose.model('srcsgt', FBOSrcsgtSchema);
 mongoose.model('combine', FBOCombineSchema);
 mongoose.model('fbofilename', FBOFileSchema);
+mongoose.model('presoleval', FBOPresolEvalSchema);
