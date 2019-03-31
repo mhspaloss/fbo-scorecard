@@ -12,14 +12,6 @@ const request = require('request');
 
 module.exports = {
   
-  foo: function () {
-    console.log('function foo');
-  },
-  
-  bar: function () {
-    console.log('function bar');
-  },
-  
   filePaths: function () {
     //capture yesterday's date as an endpoint
     var date = new Date(); 
@@ -88,14 +80,14 @@ function filterFile (fileName) {
 //filter out badly formed or uninteresting opportunities
 function isInteresting(element) {
 
-    //set myNaicsStr string object to identify the NAICS Codes I care about
-    const myDealType = 'PRESOL SRCSGT COMBINE';
+    //set myDealType string object to identify the record types I care about
+    const myDealType = process.env.MY_DEAL_TYPE;
 
     //set myNaicsStr string object to identify the NAICS Codes I care about
-    const myNaicsStr = '54133 541330 5415 54151 541511 541512 541513 541519 5416 54161 541611 541612 541613 541614 541618 54162 541620 54169 541690 5417 54171 541713 541714 541715 54172 541720 5611 56111 561110 5612 56121 561210 5613 5614 56141 561410 56142 561421 561422 56143 561431 561439';
+    const myNaicsStr = process.env.MY_NAICS_STR;
 
     //set myClassCode string object to identify the classification codes I care about
-    const myClassStr = 'A B D R';
+    const myClassStr = process.env.MY_CLASS_STR;
 
     //set regular expression to find 'sole.source' and 'set.aside' in the description
     const soleSource = RegExp('sole.source', 'i');
