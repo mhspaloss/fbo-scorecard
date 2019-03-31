@@ -60,16 +60,6 @@ app.use(methodOverride('_method'));
 //Calculate and save FBO filenames to be processed
 const pathArray = fbo.filePaths(); //calc array of path names
 
-FBOFilename.collection.drop(function(err, delOK) {  //delete old path names from MongoDb
-  if (err) throw err;
-  if (delOK) console.log("Collection deleted");
-});
-
-pathArray.forEach(function(element) { //build and save new path names to MongoDB
-  new FBOFilename(element)
-  .save()
-});
-
 // we've started you off with Express, 
 // but feel free to use whatever libs or frameworks you'd like through `package.json`.
 
@@ -278,13 +268,28 @@ app.get('/report', function (req, res) {
 
 //Validate Route
 app.get('/validate', function (req, res) {
+  const fbofilenames = pathArray;
+  res.render('validate', {
+    fbofilenames:fbofilenames
+  });
+  
+/*  FBOFilename.collection.drop(function(err, delOK) {  //delete old path names from MongoDb
+    if (err) throw err;
+    if (delOK) console.log("Collection deleted");
+  }); 
+
+  pathArray.forEach(function(element) { //build and save new path names to MongoDB
+    new FBOFilename(element)
+    .save()
+  }); 
+  
   FBOFilename.find({})
     .sort({fboFile:'desc'})
     .then(fbofilenames => {
       res.render('validate', {
         fbofilenames:fbofilenames
     });
-  });
+  }); */
 });
 
 //Workflow Route

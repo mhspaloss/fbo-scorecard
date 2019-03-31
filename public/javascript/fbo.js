@@ -12,14 +12,6 @@ const request = require('request');
 
 module.exports = {
   
-  foo: function () {
-    console.log('function foo');
-  },
-  
-  bar: function () {
-    console.log('function bar');
-  },
-  
   filePaths: function () {
     //capture yesterday's date as an endpoint
     var date = new Date(); 
@@ -88,11 +80,11 @@ function filterFile (fileName) {
 //filter out badly formed or uninteresting opportunities
 function isInteresting(element) {
 
-    //set myDealTyppe string object to identify the record types I care about
+    //set myDealType string object to identify the record types I care about
     const myDealType = process.env.MY_DEAL_TYPE;
 
     //set myNaicsStr string object to identify the NAICS Codes I care about
-    const myNaicsStr = process.env.MY_NACIS_STR;
+    const myNaicsStr = process.env.MY_NAICS_STR;
 
     //set myClassCode string object to identify the classification codes I care about
     const myClassStr = process.env.MY_CLASS_STR;
