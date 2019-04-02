@@ -14,14 +14,14 @@ module.exports = {
   
   filePaths: function () {
     //capture yesterday's date as an endpoint
-    var date = new Date(); 
-    date.setDate(date.getDate() - 1);
+    var endDate = new Date(); 
+    endDate.setDate(endDate.getDate() - 1);
     
     var curdate = parseDate(process.env.FBO_DATE); 
-    console.log('curdate ', curdate);
+    console.log('curdate ', curdate, '\nendDate ', endDate);
     var pathArray = [];
     // While processing files from last processed to today (assumes I have every day in the date range), build filename array
-    while (curdate < date) {
+    while (curdate < endDate) {
       //Build the filename and add to the array
       var curYear = curdate.getFullYear();
       var curMonth = ("0" + (curdate.getMonth() + 1)).slice(-2); //increment month by 1, add leading zero if month 1-9
