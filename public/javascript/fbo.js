@@ -29,52 +29,50 @@ module.exports = {
 
       //Build path to fbo file for FTP and gitFile for filtering
       var dateString = curYear + curMonth + curDay;
-      pathArray.push({
-          'fboFile': 'ftp://ftp.fbo.gov/FBOFeed' + dateString,
-          'gitFile': 'https://raw.githubusercontent.com/mhspaloss/fbo-parse/master/Input%20Files/FBOFeed' + dateString
-      });
-
+      pathArray.push({ 'fboDate': dateString });
+      
       //Calculate tomorrow's date
       curdate.setDate(curdate.getDate() + 1);
 
     };
+    console.log('pathArray ', pathArray);
+    return pathArray;
+  },
+
+  filterFile: function (fboDate) {
+    var dailyOpps = []; //JSON records from daily file
+    var result = []; //JSON records after filtering
+
+
+    //Read JSON file and create dailyOpps object.
+    console.log(fboDate);
+    
+    request('https://raw.githubusercontent.com/mhspaloss/fbo-parse/master/Input%20Files/FBOFeed' + fboDate, function (error, response, body) {
+      if (!error && response.statusCode == 200) {
+        var dailyOpps = parser.parse(body);
+        console.log('Number of JSON records in the input file: ', dailyOpps.length);
+
+        //Filter dailyOpps to remove poorly formed or uninteresting opportunities
+        var result = dailyOpps.filter(isInteresting);
+        console.log('Number of JSON records through the filter: ', result.length);
+        
+        //Write dailyOpps to mongoDB
+        result.forEach(function(element) {
+          //console.log('element ', element);
+          new Presoleval(element[0][Object.keys(element[0])[0]])
+          .save()
+        });  
+      }
+    });
 
     //Save current date to environment variable as ISO Standard date string
     //process.env.FBO_DATE = curYear + '-' + curMonth + '-' + curDay;
 
-    return pathArray;
-  },
+    // Return the number of records in the file, and the number that successfully passed through the filter to MongoDB
+    console.log('dailyOpps.length ', dailyOpps.length, 'result.length ', result.length);
+    return { 'numRecords': dailyOpps.length , 'numFiltered': result.length };
 
-  readFBOFiles: function () {
-    //Read MongoDB filnames and call filterFile function on each
-    Presoleval.find({}, { 'gitFile' : 1 }  , function(err , myCursor){
-      myCursor.forEach(filterFile);
-    });    
-  }, 
-};
-
-function filterFile (fileName) {
-//  var dailyOpps = []; //JSON records from daily file
-  var resultOutput = []; //JSON records after filtering
-
-
-  //Read JSON file and create dailyOpps object.
-  console.log(fileName);
-
-  var dailyOpps = parser.parse(fs.readFileSync(fileName, 'UTF-8'));
-  console.log('Number of JSON records in the input file: ', dailyOpps.length);
-
-  //Filter dailyOpps to remove poorly formed or uninteresting opportunities
-  var result = dailyOpps.filter(isInteresting);
-  console.log('Number of JSON records through the filter: ', result.length);
-
-  //Write dailyOpps to mongoDB
-  dailyOpps.forEach(function(element) {
-  //console.log('element ', element);
-  new Presoleval(element[0][0])
-    .save()
-  });  
-
+}
 };
 
 //filter out badly formed or uninteresting opportunities
