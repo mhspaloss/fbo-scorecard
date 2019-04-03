@@ -1,9 +1,10 @@
 <h1>
   Validate
 </h1>
-{{#each fbofilenames}}
+{{#each fbodates}}
   <div class="card card-body mb-2">
-    <a href="{{fboFile}}" target="_blank">{{fboFile}}</a>
+    <a href="ftp://ftp.fbo.gov/FBOFeed{{fboDate}}" target="_blank">{{fboDate}}</a>
+    <a class="btn btn-primary btn-block" href="/validate/process/{{fboDate}}">Process this File</a>
   </div>
 {{else}}
   <p>
