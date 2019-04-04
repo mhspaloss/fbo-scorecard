@@ -1,7 +1,7 @@
 //MongoDB requirements
 require('../../models/Opportunity.js');
 const mongoose = require('mongoose');
-const Presoleval = mongoose.model('presoleval');
+const Oppqueue = mongoose.model('oppqueue');
 
 //18F code requirements
 const fs = require("fs");
@@ -57,19 +57,18 @@ module.exports = {
         console.log('Number of JSON records through the filter: ', result.length);
         
         //Write dailyOpps to mongoDB
+        
         result.forEach(function(element) {
-          //console.log('element ', element);
-          new Presoleval(element[0][Object.keys(element[0])[0]])
+          element[0][Object.keys(element[0])[0]].fboType = Object.keys(element[0])[0];
+          new Oppqueue(element[0][Object.keys(element[0])[0]])
           .save()
-        });  
+        });
       }
     });
 
     //Save current date to environment variable as ISO Standard date string
     //process.env.FBO_DATE = curYear + '-' + curMonth + '-' + curDay;
 
-    // Return the number of records in the file, and the number that successfully passed through the filter to MongoDB
-    console.log('dailyOpps.length ', dailyOpps.length, 'result.length ', result.length);
     return { 'numRecords': dailyOpps.length , 'numFiltered': result.length };
 
 }

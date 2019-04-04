@@ -41,7 +41,7 @@ const Presol = mongoose.model('presol');
 const Srcsgt = mongoose.model('srcsgt');
 const Combine = mongoose.model('combine');
 const FBOFilename = mongoose.model('fbofilename');
-const Presoleval = mongoose.model('presoleval');
+const Oppqueue       = mongoose.model('oppqueue');
 
 
 //Handlebars Middleware
@@ -278,8 +278,7 @@ app.get('/validate', function (req, res) {
 //Validate FBO File Route
 app.get('/validate/process/:fboDate', function (req, res) {
   //Filter file, save filtered records to MongodB
-  const githubFile = fbo.filterFile(req.params.fboDate);
-  console.log(' githubFile ', githubFile); 
+  const githubFile = fbo.filterFile(req.params.fboDate)
   res.render('validate/process',{
     githubFile:githubFile
   });
