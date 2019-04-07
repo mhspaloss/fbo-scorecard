@@ -141,3 +141,5 @@ mongoose.model('srcsgt', FBOSrcsgtSchema);
 mongoose.model('combine', FBOCombineSchema);
 mongoose.model('fbofilename', FBOFileSchema);
 mongoose.model('oppqueue', FBOOppQueueSchema);
+mongoose.model('combinequeue', FBOOppQueueSchema);
+mongoose.model('srcsgtqueue', FBOOppQueueSchema);

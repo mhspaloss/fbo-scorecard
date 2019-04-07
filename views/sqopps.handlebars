@@ -1,0 +1,23 @@
+<h1 class="text-center">
+  Opportunities for Evaluation
+</h1>
+
+{{#each opps}}
+  <div class="card card-body mb-2">
+    <h4>
+      {{{AGENCY}}}
+    </h4>
+    <h4>
+      {{{SUBJECT}}}
+    </h4>
+    <a href="{{{URL}}}" target="_blank">Go to FedBizOpps.gov</a> 
+     <h4>
+      {{{DATE}}}{{{YEAR}}}         {{{isInteresting}}}
+    </h4>
+     <a class="btn btn-primary btn-block" href="/sqopps/edit/{{id}}">Edit</a>
+</div>
+{{else}}
+  <p>
+    No Opportunities to Evaluate
+  </p>
+{{/each}}

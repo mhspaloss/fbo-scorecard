@@ -1,7 +1,8 @@
 //MongoDB requirements
 require('../../models/Opportunity.js');
 const mongoose = require('mongoose');
-const Oppqueue = mongoose.model('oppqueue');
+const Combinequeue = mongoose.model('combinequeue');
+const Srcsgtqueue = mongoose.model('srcsgtqueue');
 
 //18F code requirements
 const fs = require("fs");
@@ -60,8 +61,13 @@ module.exports = {
         
         result.forEach(function(element) {
           element[0][Object.keys(element[0])[0]].fboType = Object.keys(element[0])[0];
-          new Oppqueue(element[0][Object.keys(element[0])[0]])
-          .save()
+          if (Object.keys(element[0])[0] == 'COMBINE') {
+             new Combinequeue(element[0][Object.keys(element[0])[0]])
+            .save()          
+          } else {
+             new Srcsgtqueue(element[0][Object.keys(element[0])[0]])
+            .save()          
+          }
         });
       }
     });
