@@ -41,7 +41,9 @@ const Presol = mongoose.model('presol');
 const Srcsgt = mongoose.model('srcsgt');
 const Combine = mongoose.model('combine');
 const FBOFilename = mongoose.model('fbofilename');
-const Oppqueue       = mongoose.model('oppqueue');
+const Oppqueue = mongoose.model('oppqueue');
+const Combinequeue = mongoose.model('combinequeue');
+const Srcsgtqueue = mongoose.model('srcsgtqueue');
 
 
 //Handlebars Middleware
@@ -77,6 +79,104 @@ app.get('/', function(req, res) {
 //About Route
 app.get('/about', function (req, res) {
   res.render('about');
+});
+
+//Sources Sougght Opp Index Page
+app.get('/cqopps', function (req, res) {
+  //Find all, sort descending by year and date (monthday)
+  Combinequeue.find({
+    "isInteresting": {
+        "$exists": false
+    }
+  })
+  .sort({YEAR:'desc', DATE: 'desc'})
+  .then(opps => {
+    Combinequeue.find({
+    "DATE": opps[0].DATE,
+    "YEAR": opps[0].YEAR
+  })
+  .then(opps => {
+    res.render('cqopps', {
+      opps:opps
+      });
+    });
+  });
+});
+
+//Sources Sought Edit Opp Route
+app.get('/cqopps/edit/:id', function (req, res) {
+  Combinequeue.findOne({
+    _id: req.params.id
+  })
+  .then(opps => {
+    res.render('cqopps/edit',{
+      opps:opps
+    });
+  }); 
+});
+
+//Sources Sought Edit Opp Form Process
+app.put('/cqopps/:id', function (req, res) {
+  Combinequeue.findOne({
+    _id: req.params.id
+  })
+  .then(presol => {
+  //New values
+    presol.isInteresting = req.body.isInteresting;
+    presol.save()
+      .then(opps => {
+        res.redirect('/cqopps');
+    })
+  });
+});
+
+//SRCSGT Opp Index Page
+app.get('/sqopps', function (req, res) {
+  //Find all, sort descending by year and date (monthday)
+  Srcsgtqueue.find({
+    "isInteresting": {
+        "$exists": false
+    }
+  })
+  .sort({YEAR:'desc', DATE: 'desc'})
+  .then(opps => {
+    Srcsgtqueue.find({
+    "DATE": opps[0].DATE,
+    "YEAR": opps[0].YEAR
+  })
+  .then(opps => {
+    res.render('sqopps', {
+      opps:opps
+      });
+    });
+  });
+});
+
+//SRCSGT Edit Opp Route
+app.get('/sqopps/edit/:id', function (req, res) {
+  Srcsgtqueue.findOne({
+    _id: req.params.id
+  })
+  .then(opps => {
+    res.render('sqopps/edit',{
+      opps:opps
+    });
+  }); 
+});
+
+//SRCSGT Edit Opp Form Process
+app.put('/sqopps/:id', function (req, res) {
+  Srcsgtqueue.findOne({
+    _id: req.params.id
+  })
+  .then(srcsgt => {
+  //New values
+    srcsgt.isInteresting = req.body.isInteresting;
+    srcsgt.save()
+      .then(opps => {
+        res.redirect('/sqopps');
+    })
+  });
 });
 
 //Presol Opp Index Page
